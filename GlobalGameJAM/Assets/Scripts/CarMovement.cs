@@ -8,9 +8,11 @@ using UnityEngine.UI;
 
 public class CarMovement : MonoBehaviour
 {
+    public ParticleSystem[] particles;
+
     public Transform mickey;
     public AudioClip[] audioclips;
-    AudioSource AS;
+    public AudioSource[] AS;
     public float speed;
     public float maxSpeed = 200;
     public float steeringspeed;
@@ -28,11 +30,15 @@ public class CarMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        foreach (ParticleSystem part in particles)
+        {
+            part.gameObject.SetActive(false);
+        }
 
         StartCoroutine(startcounting());
 
 
-        AS = GetComponent<AudioSource>();
+        AS[0] = GetComponent<AudioSource>();
         rb =  GetComponent<Rigidbody>();    
     }
 
@@ -67,6 +73,17 @@ public class CarMovement : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+
+        RagdollCharacter rc = other.gameObject.GetComponentInParent<RagdollCharacter>();
+        if (rc != null)
+        {
+            rc.ToggleRigidbody(true);
+            rc.screaming();
+        }
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.name == "Road")
@@ -79,13 +96,51 @@ public class CarMovement : MonoBehaviour
 
     IEnumerator startcounting()
     {
+        AS[1].PlayOneShot(audioclips[2]);
+        TMP.text = "Willey : Remember to follow driving regulations and avoid driving over people.";
 
-        yield return new WaitForSeconds(3);
-        AS.PlayOneShot(audioclips[1]);
+        yield return new WaitForSeconds(15);
+        TMP.text = "Willey : I think you can press the gas a little more now.";
+        maxSpeed = 30;
+
+
+
+
+        yield return new WaitForSeconds(20);
+        TMP.text = "Willey : Lets slow down a little.";
+        AS[1].Stop();
+        AS[1].PlayOneShot(audioclips[3]);
         yield return new WaitForSeconds(2);
-        TMP.text = "Mickey : I think you can press the gas a little more now";
         maxSpeed = 100;
-        AS.PlayOneShot(audioclips[0]);
+        AS[0].PlayOneShot(audioclips[0]);
+        yield return new WaitForSeconds(1);
+        AS[0].PlayOneShot(audioclips[1]);
+        
+        foreach (ParticleSystem part in particles)
+        {
+            part.gameObject.SetActive(true);
+        }
+        
+        AS[1].Stop();
+        AS[1].PlayOneShot(audioclips[1]);
+        TMP.text = "Willey : what the fuck are you doing!";
+        AS[1].loop = true;
+        yield return new WaitForSeconds(3);
+        TMP.text = "";
 
+    }
+
+    
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Rigidbody rigidbody = hit.collider.attachedRigidbody;
+
+        if (rigidbody != null)
+        {
+            Vector3 forceDirection = hit.gameObject.transform.position - transform.position;
+            //forceDirection.y = 0;
+            forceDirection.Normalize();
+            rigidbody.AddForceAtPosition(forceDirection * 5, transform.position, ForceMode.Impulse);
+        }
     }
 }

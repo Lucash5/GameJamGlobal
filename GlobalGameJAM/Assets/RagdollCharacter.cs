@@ -10,6 +10,7 @@ public class RagdollCharacter : MonoBehaviour
     Animator anim;
     public AudioClip[] screams;
     AudioSource AS;
+    
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class RagdollCharacter : MonoBehaviour
 
     public void ToggleRigidbody(bool t)
     {
+        
         anim.enabled = t;
 
         foreach (Rigidbody rigidbody in ragdollRigidbodies)
@@ -40,5 +42,9 @@ public class RagdollCharacter : MonoBehaviour
             a = true;
         AS.PlayOneShot(screams[Random.Range(0, screams.Length)]);
         }
+
+    
+
     }
+
 }
