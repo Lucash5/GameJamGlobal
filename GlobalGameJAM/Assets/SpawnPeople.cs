@@ -17,32 +17,32 @@ public class SpawnPeople : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
         if (hasspawned == false)
         {
             hasspawned = true;
 
-        for (int i = 0; i < 75; i++)
+        for (int i = 0; i < 25; i++)
         {
             GameObject klooni = Instantiate(person);
             klooni.transform.position = new Vector3(Random.Range(-1380, 1700), 0.35f, Random.Range(139, 148));
         }
-        for (int i = 0; i < 150; i++)
+        for (int i = 0; i < 50; i++)
         {
             GameObject klooni = Instantiate(person); 
             klooni.transform.position = new Vector3(Random.Range(-4460, -1380), 0.35f, Random.Range(139, 148));
         }
-        for (int i = 0; i < 300; i++)
+        for (int i = 0; i < 100; i++)
         {
             GameObject klooni = Instantiate(person);
             klooni.transform.position = new Vector3(Random.Range(-7540, -4460), 0.35f, Random.Range(139, 148));
         }
-        for (int i = 0; i < 600; i++)
+        for (int i = 0; i < 200; i++)
         {
             GameObject klooni = Instantiate(person);
             klooni.transform.position = new Vector3(Random.Range(-10620, -7540), 0.35f, Random.Range(139, 148));
         }
-        for (int i = 0; i < 1200; i++)
+        for (int i = 0; i < 400; i++)
         {
             GameObject klooni = Instantiate(person);
             klooni.transform.position = new Vector3(Random.Range(-13700, -10620), 0.35f, Random.Range(139, 148));

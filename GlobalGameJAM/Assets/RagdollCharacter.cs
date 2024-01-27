@@ -47,4 +47,14 @@ public class RagdollCharacter : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        ToggleRigidbody(true);
+    }
+
+    IEnumerator destroying()
+    {
+        yield return new WaitForSeconds(8);
+        Destroy(gameObject);
+    }
 }

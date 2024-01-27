@@ -10,7 +10,6 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance;
 
     [Header("Audio Sources")]
-    public AudioSource soundEffectAS;
     public AudioSource musicAS;
 
     [Header("Settings")]
@@ -36,11 +35,11 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySoundEffectOnce(SoundEffect soundEffect)
     {
-        soundEffectAS.spatialBlend = 0;
+        //soundEffectAS.spatialBlend = 0;
 
         if (soundEffect.mixerGroup != null)
         {
-            soundEffectAS.outputAudioMixerGroup = soundEffect.mixerGroup;
+            //soundEffectAS.outputAudioMixerGroup = soundEffect.mixerGroup;
         }
 
         if (soundEffect.clips.Length == 0)
@@ -49,7 +48,7 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        soundEffectAS.PlayOneShot(soundEffect.GetRandomClip(), soundEffect.volume);
+       //soundEffectAS.PlayOneShot(soundEffect.GetRandomClip(), soundEffect.volume);
     }
 
     public void PlaySoundEffectOnce(SoundEffect soundEffect, GameObject sourceObject)
